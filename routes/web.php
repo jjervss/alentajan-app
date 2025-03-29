@@ -10,8 +10,12 @@ use App\Services\ProductService;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['name' => 'jervie-app']);
 });
+
+Route::get('/users', [UserController::class, 'index']);
+
+Route::resource('/products', Product::class);
 
 //Service Container
 Route::get('/test-container', function (Request $request){
@@ -78,14 +82,14 @@ Route::post('/token', function (Request $request){
     return $request->all();
 });
 
-//Controller -> Middleware
-Route::get('/users', [UserController::class, 'Index'])->middleware('user-middleware');
+// //Controller -> Middleware
+// Route::get('/users', [UserController::class, 'Index'])->middleware('user-middleware');
 
-//Resource
-Route::resource('products', Product::class);
+// //Resource
+// Route::resource('products', Product::class);
 
 //View with data
 Route::get('/product-list', function (ProductService $productService){
-    $data['products'] = $productService->listProducts();
-    return view('products.list', $data);
-});
+     $data['products'] = $productService->listProducts();
+     return view('products.list', $data);
+ });
